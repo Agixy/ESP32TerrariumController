@@ -1,0 +1,48 @@
+﻿@page "/"
+@inject HttpClient Http
+@using Blazorise
+
+<h1>Oświetlenie - czerwone</h1>
+
+<Field Horizontal="true">
+    <FieldBody ColumnSize="ColumnSize.Is10">
+        <Buttons>
+            <Button Class="btn-on btn-switch" Clicked="@(() => Switch("on"))" Active="@onActive">On</Button>
+            <Button Class="btn-off btn-switch" Clicked="@(() => Switch("off"))" Active="@offActive">Off</Button>
+            <Button Class="btn-auto btn-switch" Clicked="@(() => Switch("auto"))" Active="@autoActive">Auto</Button>
+        </Buttons>
+    </FieldBody>
+</Field>
+
+
+@code {
+
+    public bool onActive { get; set; }
+    public bool offActive { get; set; }
+    public bool autoActive { get; set; }
+
+    void Switch(string value)
+    {
+        if ((value).Equals("on"))
+        {
+            Http.GetAsync("http://999999/switch-red?message=red-on");
+            onActive = true;
+            offActive = false;
+            autoActive = false;
+        }
+        else if ((value).Equals("off"))
+        {
+            Http.GetAsync("http://9999999/switch-red?message=red-off");
+            onActive = false;
+            offActive = true;
+            autoActive = false;
+        }
+        else if ((value).Equals("auto"))
+        {
+            Http.GetAsync("http://99999/switch-red?message=red-auto");
+            onActive = false;
+            offActive = false;
+            autoActive = true;
+        }
+    }
+}
